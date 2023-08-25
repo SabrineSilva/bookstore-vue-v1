@@ -111,14 +111,18 @@
             </template>
 
             <!-- Slot personalizado para as ações na tabela -->
+
             <template v-slot:[`item.actions`]="{ item }">
-                <v-icon color="light-blue darken-2" class="edit-icon-table mr-2" @click="editItem(item)">
-                    mdi-pencil
-                </v-icon>
+        
+                    <v-icon color="light-blue darken-2" class="edit-icon-table mr-2" @click="editItem(item)">
+                        mdi-pencil
+                    </v-icon>
+              
                 <v-icon color="red lighten-1" class="delete-icon-table" @click="OnClickDelete(item)">
                     mdi-delete
                 </v-icon>
             </template>
+
             <template v-slot:no-data>
                 <span>Nada foi encontrado.</span>
             </template>

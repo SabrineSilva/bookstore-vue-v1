@@ -27,3 +27,8 @@
     transform: none;
   }
 }
+
+.edit-icon-table:hover, .delete-icon-table:hover {
+opacity: 0.5;
+
+}

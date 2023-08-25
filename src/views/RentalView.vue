@@ -113,7 +113,7 @@
             </template>
             <template v-slot:[`item.data_devolucao`]="{ item }">
                 <div>
-                    <v-chip v-if="item.data_devolucao === 'Pendente'" color="yellow lighten-2">
+                    <v-chip v-if="item.data_devolucao === 'Pendente'" color="yellow lighten-4">
                         <v-icon class="icon-status" left>mdi-alert-circle-outline</v-icon>
                         <strong>Pendente</strong></v-chip
                     >
@@ -326,7 +326,7 @@ export default {
             item.data_aluguel = moment(new Date()).format('YYYY-MM-DD');
             item.data_previsao = moment(new Date()).format('YYYY-MM-DD');
             item.data_devolucao = moment(new Date()).format('YYYY-MM-DD');
-            console.log(item);
+        
             RentalApi.update(item)
                 .then(() => {
                     showAlertToast('success', 'Registro atualizado com sucesso.');
@@ -361,22 +361,23 @@ export default {
         },
 
         getStatusText(dataDevolucao, dataPrevisao) {
-            const today = new Date();
-
+            const today = new Date().toISOString().substr(0, 10);
             const devolution = dataDevolucao ? dataDevolucao : '';
             const forecast = dataPrevisao;
 
-            if (devolution !== null && devolution > forecast) {
+            if (devolution > forecast || today > forecast ) {
                 return 'Atrasado';
             } else if (devolution !== null || forecast >= today) {
+           
                 return 'No prazo';
+             
             } else {
                 return 'Algo deu errado';
             }
         },
 
         getStatusColor(dataDevolucao, dataPrevisao) {
-            const today = new Date();
+            const today = new Date().toISOString().substr(0, 10);
 
             const devolution = dataDevolucao ? dataDevolucao : '';
             const forecast = dataPrevisao;
@@ -386,14 +387,13 @@ export default {
             } else if (devolution !== '' && devolution <= forecast) {
                 return 'green lighten-2';
             } else if (devolution === '' && today > forecast) {
-                return 'yellow';
+                return 'yellow lighten-2';
             } else {
                 return 'blue lighten-3';
             }
         },
 
         getStatusIcon(dataDevolucao, dataPrevisao) {
-            const today = new Date();
 
             const devolution = dataDevolucao ? dataDevolucao : '';
             const forecast = dataPrevisao;
@@ -402,8 +402,6 @@ export default {
                 return 'mdi-book-alert';
             } else if (devolution !== '' && devolution <= forecast) {
                 return 'mdi-book-check';
-            } else if (devolution === '' && today > forecast) {
-                return 'mdi-alert-outline';
             } else {
                 return 'mdi-timer-sand';
             }
