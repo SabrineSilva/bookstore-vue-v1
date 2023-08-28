@@ -365,14 +365,14 @@ export default {
             const devolution = dataDevolucao ? dataDevolucao : '';
             const forecast = dataPrevisao;
 
-            if (devolution > forecast || today > forecast ) {
+            if (devolution !== '' && devolution > forecast) {
                 return 'Atrasado';
-            } else if (devolution !== null || forecast >= today) {
-           
+            } else if (devolution !== '' && devolution <= forecast) {
                 return 'No prazo';
-             
+            } else if (devolution === '' && today > forecast) {
+                return 'Atrasado';
             } else {
-                return 'Algo deu errado';
+                return 'No prazo';
             }
         },
 
